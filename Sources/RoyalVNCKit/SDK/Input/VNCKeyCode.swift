@@ -162,7 +162,12 @@ public extension VNCKeyCode {
 		for scalar in character.unicodeScalars {
 			let unicodeValue = scalar.value
 
-			codes.append(.init(unicodeValue))
+			// X11 keysyms equal the code point only for Latin-1; every
+			// other character is 0x01000000 + code point. Sent raw, an em
+			// dash or an emoji was a meaningless keysym and was dropped.
+			let keysym = unicodeValue <= 0xFF ? unicodeValue : 0x0100_0000 + unicodeValue
+
+			codes.append(.init(keysym))
 		}
 
 		return codes

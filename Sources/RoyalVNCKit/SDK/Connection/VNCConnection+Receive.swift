@@ -74,6 +74,12 @@ private extension VNCConnection {
 
 		logger.logDebug("Received Framebuffer Update: \(framebufferUpdate)")
 
+		if let sentAt = state.roundTripProbeSentAt {
+			state.roundTripProbeSentAt = nil
+
+			roundTripHandler?(Date().timeIntervalSinceReferenceDate - sentAt)
+		}
+
 		/*
 		// Write out the framebuffer for testing purposes
 		try framebuffer.writeSurface()

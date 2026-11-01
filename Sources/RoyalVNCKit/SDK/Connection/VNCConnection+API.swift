@@ -126,6 +126,22 @@ public extension VNCConnection {
 	}
 }
 
+// MARK: - Round Trip
+public extension VNCConnection {
+	/// Measures the round trip to the server and reports it through
+	/// `roundTripHandler`.
+	///
+	/// VNC has no ping, so this sends a non-incremental update request for
+	/// the top-left pixel, which a server answers straight away whether or
+	/// not anything changed, and times the next framebuffer update. Does
+	/// nothing before the framebuffer exists.
+	func measureRoundTrip() {
+		guard framebuffer != nil else { return }
+
+		enqueueClientToServerMessage(VNCProtocol.RoundTripProbe(state: state))
+	}
+}
+
 // MARK: - Keyboard Input
 public extension VNCConnection {
 	func keyDown(_ key: VNCKeyCode) {

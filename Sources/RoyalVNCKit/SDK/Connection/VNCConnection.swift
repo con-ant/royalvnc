@@ -73,6 +73,10 @@ public final class VNCConnection: NSObjectOrAnyObject {
 	/// clipboard text is unaffected. Set before calling `connect()`.
 	public var monitorsLocalClipboard = true
 
+	/// Called, on a background queue, with each round trip measured by
+	/// `measureRoundTrip()`.
+	public var roundTripHandler: ((_ seconds: TimeInterval) -> Void)?
+
 	var clientToServerMessageQueue = Queue<VNCSendableMessage>()
 
     var mouseButtonState: VNCProtocol.MousePointerButton = [ ]

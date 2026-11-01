@@ -25,6 +25,10 @@ extension VNCConnection {
 
 		var areContinuousUpdatesSupported = false
 		var areContinuousUpdatesEnabled = false
+
+		/// When the last round-trip probe went on the wire; nil when none
+		/// is outstanding. See `VNCConnection.measureRoundTrip()`.
+		var roundTripProbeSentAt: TimeInterval?
 	}
 }
 

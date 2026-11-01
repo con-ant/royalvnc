@@ -6,7 +6,8 @@ import Foundation
 
 extension VNCConnection {
 	func startMonitoringClipboard() {
-		guard settings.isClipboardRedirectionEnabled else { return }
+		guard settings.isClipboardRedirectionEnabled,
+			  monitorsLocalClipboard else { return }
 
 		clipboardMonitor.startMonitoring()
 	}

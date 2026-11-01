@@ -118,6 +118,14 @@ extension VNCConnection {
     }
 }
 
+// MARK: - Clipboard
+public extension VNCConnection {
+	/// Sends `text` to the server as its new clipboard contents.
+	func sendClipboardText(_ text: String) {
+		enqueueClientCutTextMessage(text)
+	}
+}
+
 // MARK: - Keyboard Input
 public extension VNCConnection {
 	func keyDown(_ key: VNCKeyCode) {

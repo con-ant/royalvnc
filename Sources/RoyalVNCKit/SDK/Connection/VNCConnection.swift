@@ -66,6 +66,13 @@ public final class VNCConnection: NSObjectOrAnyObject {
 	let clipboard: VNCClipboard
 	let clipboardMonitor: VNCClipboardMonitor
 
+	/// Whether the local clipboard is polled and pushed to the server while
+	/// connected. On iOS, polling `UIPasteboard` shows the system's
+	/// "Allow Paste" prompt, so an app can turn this off and send text
+	/// explicitly with `sendClipboardText(_:)` instead. Server-to-client
+	/// clipboard text is unaffected. Set before calling `connect()`.
+	public var monitorsLocalClipboard = true
+
 	var clientToServerMessageQueue = Queue<VNCSendableMessage>()
 
     var mouseButtonState: VNCProtocol.MousePointerButton = [ ]

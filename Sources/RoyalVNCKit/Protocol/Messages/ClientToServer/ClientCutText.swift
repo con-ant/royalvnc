@@ -16,7 +16,10 @@ extension VNCProtocol {
 
 extension VNCProtocol.ClientCutText {
 	var data: Data {
-		var latin1TextData = text.data(using: Self.stringEncoding) ?? .init()
+		// The message is Latin-1 only. Without lossy conversion any text
+		// with a character outside it (an emoji, a curly quote) encoded to
+		// nothing and emptied the server's clipboard.
+		var latin1TextData = text.data(using: Self.stringEncoding, allowLossyConversion: true) ?? .init()
 		var textLength = latin1TextData.count
 
 		if textLength > UInt32.max {
